@@ -22,11 +22,6 @@
 class Reservation extends CActiveRecord
 {
 	/**
-	 * If false do not save the record and every record is invalidated.
-	 * @var boolean
-	 */
-	public $confirmreservation = true;
-	/**
 	 * Used to store a count of rooms available for this booking.
 	 * @var integer
 	 */
@@ -78,15 +73,13 @@ class Reservation extends CActiveRecord
 	public function behaviors()
 	{
 		$reservationBehaviors = Yii::app()->controller->module->reservationbehaviors;
-		//Load default behaviours.
-		//Load extended behaviours.
 		foreach($reservationBehaviors as $behavior){
 				$behavior = array('class'=>'openbooking.extensions.reservationbehaviors.'.$behavior);
 				$behaviors[] = $behavior;
 		}
 		return $behaviors;
 	}
-
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -133,46 +126,21 @@ class Reservation extends CActiveRecord
 		));
 	}
 
-	
 	/**
-	 * Override the save method. i.e when we're checking availibilty there's no need to save to the database. Do everything else but this step.
+	 * Set price onlinepayment amount for this reservation
 	 * (non-PHPdoc)
-	 * @see CActiveRecord::save()
+	 * @see CActiveRecord::beforesave()
 	 */
-	public function save($runValidation=true,$attributes=null)
-	{
+	public function beforeSave() {
+		
 		//Make sure we have a date from.
 		if(empty($this->dateto)) {
+		
 			$tempDateTo = new DateTime();
 			$tempDateTo = DateTime::createFromFormat('Y-m-d',$this->datefrom);
 			$tempDateTo->add(new DateInterval('P'.$this->numberofnights."D"));
 			$this->setAttribute('dateto', $tempDateTo->format('Y-m-d'));
-		} else {
 		}
-		
-		if($this->confirmreservation) {
-			return parent::save($runValidation,$attributes);
-		}
-		else {
-			if(!$runValidation || $this->validate($attributes)) { 
-				 if($this->beforeSave()) //Act like the object was saved.
-				 {
-				 	$this->afterSave();
-				 	return true;	
-				 }
-				 return false;
-			}
-			else
-				return false;
-		}
-	}
-	
-	/**
-	 * Set price onlinepayment amount for this reservation
-	 * (non-PHPdoc)
-	 * @see CActiveRecord::afterSave()
-	 */
-	public function afterSave() {
 		
 		if(empty($this->onlinepayment)) {
 			$criteria=new CDbCriteria;
@@ -183,7 +151,7 @@ class Reservation extends CActiveRecord
 			$this->setAttribute('onlinepayment', $model->price);
 		}
 		
-		parent::afterSave();
+		return parent::beforeSave();
 	}
 	
     

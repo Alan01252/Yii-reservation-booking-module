@@ -82,16 +82,16 @@ class Reservationdetails extends CActiveRecord
 			'id' => 'ID',
 			'reservationid' => 'Reservationid',
 			'title' => 'Title',
-			'firstname' => 'Firstname',
-			'lastname' => 'Lastname',
-			'contactnumber' => 'Contactnumber',
-			'emailaddress' => 'Emailaddress',
-			'postaddress' => 'Postaddress',
+			'firstname' => 'First Name',
+			'lastname' => 'Last Name',
+			'contactnumber' => 'Contact Number',
+			'emailaddress' => 'Email Address',
+			'postaddress' => 'Post Address',
 			'city' => 'City',
 			'county' => 'County',
 			'country' => 'Country',
 			'postcode' => 'Postcode',
-			'otherinfo' => 'Otherinfo',
+			'otherinfo' => 'Other Info',
 		);
 	}
 

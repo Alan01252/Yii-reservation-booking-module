@@ -57,23 +57,26 @@ class ReservationdetailsController extends Controller
 
 	/**
 	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * If creation is successful, the browser will be redirected to the 'payment' page.
 	 */
 	public function actionCreate()
 	{
 		$model=new Reservationdetails;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Reservationdetails']))
-		{
-			$model->attributes=$_POST['Reservationdetails'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
 		
-		$reservation = Yii::app()->session['reservation'];
+		$reservation=Reservation::model()->findByPk(Yii::app()->session['reservationid']);
+		$reservation->confirmreservation = true;
+		
+		if(isset($_POST['Reservationdetails'])) {
+			if($reservation->save()) {
+				$model->attributes=$_POST['Reservationdetails'];
+				$model->setAttribute('reservationid',$reservation->id);
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id));
+			}
+		}
+		else {
+			//Throw Exception("Unable to save reservation", 500);
+		}
 		
 		$this->render('create',array(
 			'model'=>$model,

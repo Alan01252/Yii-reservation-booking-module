@@ -129,6 +129,7 @@ class DateOverlap extends CActiveRecordBehavior
     	$sql = "SELECT date(`datefrom`)as datefrom,date(`dateto`)as dateto FROM reservation WHERE ";
 		$sql .= $this->GetOverlapCheckSQL();
 		$sql .= " and roomid=:roomid";
+		$sql .= " and confirmreservation=true";
 
 
 		$command=$this->_connection->createCommand($sql);

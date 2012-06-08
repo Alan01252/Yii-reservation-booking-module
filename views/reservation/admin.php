@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'List Reservation', 'url'=>array('index')),
-	array('label'=>'Create Reservation', 'url'=>array('create')),
+	array('label'=>'Create Reservation', 'url'=>array('reservation/available')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

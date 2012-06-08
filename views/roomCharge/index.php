@@ -4,8 +4,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create RoomType', 'url'=>array('create')),
-	array('label'=>'Manage RoomType', 'url'=>array('admin')),
+	array('label'=>'Create Room Charge', 'url'=>array('create')),
+	array('label'=>'Manage Room Charge', 'url'=>array('admin')),
 );
 ?>
 <h1>Room Charges</h1>

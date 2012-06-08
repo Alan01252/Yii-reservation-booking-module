@@ -71,10 +71,10 @@ class ReservationController extends Controller
 		
 		if(isset($_POST['Reservation'])) {
 			$model->attributes=$_POST['Reservation'];
-			$model->confirmreservation = false; //Don't want to actually save, just checking if we're available.
+			$model->setAttribute('confirmreservation',false); //Don't want to actually save, just checking if we're available.
 		
 			if($model->save()) {
-				Yii::app()->session['reservation'] = $model;
+				Yii::app()->session['reservationid'] = $model->id;
 				$this->redirect(array('reservationdetails/create'));
 			}
 		}
@@ -97,8 +97,10 @@ class ReservationController extends Controller
 
 		if(isset($_POST['Reservation'])) {
 			$model->attributes=$_POST['Reservation'];
-			if($model->save());
-				//$this->redirect(array('view','id'=>$model->id));
+			$model->setAttribute('confirmreservation',true);
+			if($model->save()) {
+				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 		
 		$this->render('create',array(

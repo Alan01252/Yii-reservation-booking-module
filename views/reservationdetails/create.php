@@ -25,8 +25,8 @@ $this->menu=array(
   <tbody>
     <tr>
       <td><?php echo $reservation->roomtype->description ?></td>
-      <td><?php echo $reservation->dateto ?></td>
       <td><?php echo $reservation->datefrom ?></td>
+      <td><?php echo $reservation->dateto ?></td>
       <td><?php echo $reservation->onlinepayment ?></td>
       <td><?php echo $reservation->roomsavailable ?></td>
     </tr>
