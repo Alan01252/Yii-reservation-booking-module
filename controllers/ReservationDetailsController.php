@@ -1,16 +1,6 @@
 <?php
-/**
- * @author alan.hollis http://alanhollis.com
- * @copyright alan.hollis http://alanhollis.com
- * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
- * 
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- * Neither the name of Yii Software LLC nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-class ReservationController extends Controller
+
+class ReservationDetailsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -37,11 +27,11 @@ class ReservationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','available','create'),
+				'actions'=>array('index','view','create'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+			array('allow', // allow authenticated user to perform 'update' actions
+				'actions'=>array('update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,46 +55,32 @@ class ReservationController extends Controller
 		));
 	}
 
-	public function actionAvailable()
-	{
-		$model=new Reservation;
-		
-		if(isset($_POST['Reservation'])) {
-			$model->attributes=$_POST['Reservation'];
-			$model->setAttribute('confirmreservation',false); //Don't want to actually save, just checking if we're available.
-		
-			if($model->save()) {
-				Yii::app()->session['reservationid'] = $model->id;
-				$this->redirect(array('reservationDetails/create'));
-			}
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));		
-		
-	}
 	/**
 	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * If creation is successful, the browser will be redirected to the 'payment' page.
 	 */
 	public function actionCreate()
 	{
-		$model=new Reservation;
+		$model=new ReservationDetails;
 		
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Reservation'])) {
-			$model->attributes=$_POST['Reservation'];
-			$model->setAttribute('confirmreservation',true);
-			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+		$reservation=Reservation::model()->findByPk(Yii::app()->session['reservationid']);
+		$reservation->confirmreservation = true;
+		
+		if(isset($_POST['ReservationDetails'])) {
+			if($reservation->save()) {
+				$model->attributes=$_POST['ReservationDetails'];
+				$model->setAttribute('reservationid',$reservation->id);
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->id));
 			}
+		}
+		else {
+			//Throw Exception("Unable to save reservation", 500);
 		}
 		
 		$this->render('create',array(
 			'model'=>$model,
+			'reservation'=>$reservation,
 		));
 		
 	}
@@ -121,9 +97,9 @@ class ReservationController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Reservation']))
+		if(isset($_POST['ReservationDetails']))
 		{
-			$model->attributes=$_POST['Reservation'];
+			$model->attributes=$_POST['ReservationDetails'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -158,8 +134,7 @@ class ReservationController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Reservation');
-		
+		$dataProvider=new CActiveDataProvider('ReservationDetails');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -170,15 +145,16 @@ class ReservationController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Reservation('search');
+		$model=new Reservationdetails('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Reservation']))
-			$model->attributes=$_GET['Reservation'];
+		if(isset($_GET['ReservationDetails']))
+			$model->attributes=$_GET['ReservationDetails'];
 
 		$this->render('admin',array(
 			'model'=>$model,
 		));
 	}
+		
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -187,7 +163,7 @@ class ReservationController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Reservation::model()->findByPk((int)$id);
+		$model=ReservationDetails::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -199,7 +175,7 @@ class ReservationController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='reservation-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='reservationdetails-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

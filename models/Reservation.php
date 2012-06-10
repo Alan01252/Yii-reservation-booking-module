@@ -40,7 +40,11 @@ class Reservation extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
 
+
+	
+	
 
 	/**
 	 * @return string the associated database table name
