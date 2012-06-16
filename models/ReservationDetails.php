@@ -49,10 +49,10 @@ class ReservationDetails extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('reservationid, title, firstname, lastname, contactnumber, emailaddress, postaddress, city, county, country, postcode, otherinfo', 'required'),
+			array('reservationid, title, firstname, lastname, contactnumber, emailaddress, postaddress, city, county, country, postcode', 'required'),
 			array('reservationid', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>3),
-			array('firstname, lastname, emailaddress, postaddress, city, county, country, otherinfo', 'length', 'max'=>255),
+			array('firstname, lastname, emailaddress, postaddress, city, county, country', 'length', 'max'=>255),
 			array('contactnumber', 'length', 'max'=>20),
 			array('postcode', 'length', 'max'=>10),
 			// The following rule is used by search().

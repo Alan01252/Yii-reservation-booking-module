@@ -41,7 +41,7 @@ class ReservationController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','search'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -61,8 +61,18 @@ class ReservationController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($id)->with('ReservationDetails'),
 		));
+	}
+	
+	public function actionSearch()
+	{
+		$dataProvider = Reservation::model()->search($_GET['date'],$_GET['description']);
+		
+		$this->render('index',array(
+						'dataProvider'=>$dataProvider,
+		));
+		
 	}
 
 	public function actionAvailable()
@@ -124,13 +134,17 @@ class ReservationController extends Controller
 		if(isset($_POST['Reservation']))
 		{
 			$model->attributes=$_POST['Reservation'];
+			//Make sure we're updating the dateto based on the number of nights.
+			$model->dateto = "";
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
+	
+		
 		$this->render('update',array(
 			'model'=>$model,
 		));
+		
 	}
 
 	/**
@@ -158,7 +172,10 @@ class ReservationController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Reservation');
+		$criteria = new CDbCriteria();
+		$criteria->with(array('RoomType','ReservationDetails'));
+		
+		$dataProvider=new CActiveDataProvider('Reservation',$criteria);
 		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,

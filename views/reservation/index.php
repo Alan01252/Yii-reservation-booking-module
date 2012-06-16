@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Create Reservation', 'url'=>array('create')),
-	array('label'=>'Manage Reservation', 'url'=>array('admin')),
 );
 ?>
 
@@ -16,8 +15,11 @@ $this->menu=array(
     'dataProvider'=>$dataProvider,
     'template'=>"{items}",
     'columns'=>array(
-        array('name'=>'roomid', 'header'=>'Room ID'),
+    	array('name'=>'reservationDetails.firstname', 'header'=>'First name'),
+    	array('name'=>'reservationDetails.lastname', 'header'=>'Last name'),
+        array('name'=>'roomtype.description', 'header'=>'Room Type'),
         array('name'=>'datefrom', 'header'=>'Date From'),
+    	array('name'=>'numberofnights', 'header'=>'Number Of Nights'),
         array('name'=>'dateto', 'header'=>'Date To'),
         array(
             'class'=>'bootstrap.widgets.BootButtonColumn',

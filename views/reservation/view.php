@@ -3,28 +3,53 @@ $this->breadcrumbs=array(
 	'Reservations'=>array('index'),
 	$model->id,
 );
-
-$this->menu=array(
-	array('label'=>'List Reservation', 'url'=>array('index')),
-	array('label'=>'Create Reservation', 'url'=>array('reservation/available')),
-	array('label'=>'Update Reservation', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Reservation', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Reservation', 'url'=>array('admin')),
-);
 ?>
 
-<h1>View Reservation #<?php echo $model->id; ?></h1>
+<div class="row">
 
-<?php
- $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'roomid',
-		'datefrom',
-		'dateto',
-		'onlinepayment',
-	),
-)); 
+	<div class="span6">
+		<h1>Reservation</h1>
+	</div>
+	
+</div>
 
-?>
+<div class="row">
+	<div class="span6">
+		<?php 
+		$this->widget('bootstrap.widgets.BootDetailView',array(
+			'data'=>$model->reservationDetails,
+			'attributes'=>array(
+				'reservationid',
+				'title',
+				'firstname',
+				'lastname',
+				'contactnumber',
+				'emailaddress',
+				'postaddress',
+				'city',
+				'county',
+				'country',
+				'postcode',
+				'otherinfo',
+			),
+		)); 
+		?>
+	</div>
+	
+	<div class="span6">
+		<?php
+		 $this->widget('bootstrap.widgets.BootDetailView', array(
+			'data'=>$model,
+			'attributes'=>array(
+				'id',
+				'roomid',
+				'datefrom',
+				'numberofnights',
+				'dateto',
+				'onlinepayment',
+			),
+		)); 
+		?>
+	</div>
+
+</div>

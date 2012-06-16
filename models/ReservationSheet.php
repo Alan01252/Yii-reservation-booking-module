@@ -3,10 +3,10 @@
 *@author Alan Hollis http://alanhollis.com
 *@copyright alan.hollis http://alanhollis.com
 **/
-class ReservationSheet
+class ReservationSheet extends CActiveRecord
 {
 	//Date to populate our sheet from
-	private $dateFrom;
+	public $dateFrom;
 	//Array of dates found
 	private $dates = Array();
 	//Rows reservation sheet.

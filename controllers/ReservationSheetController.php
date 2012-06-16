@@ -57,15 +57,17 @@ class ReservationSheetController extends Controller
 	/**
 	 * Lists all reservations.
 	 */
-	public function actionIndex($dateFrom = null)
+	public function actionIndex()
 	{
-		if($dateFrom === null) {
-			$dateFrom = date("Y-m-d");
+		$dateFrom = date("Y-m-d");
+		
+		if(!empty($_POST['ReservationSheet']['dateFrom'])) {
+			$dateFrom = $_POST['ReservationSheet']['dateFrom'];
 		}
 		
 		$reservationSheet = new ReservationSheet($dateFrom);
 		$reservationSheet->populate();
-		
+
 		$this->render('index',array(
 				'reservationSheet'=>$reservationSheet,
 		));

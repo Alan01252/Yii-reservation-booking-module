@@ -1,3 +1,12 @@
+<?php 
+	if($model->reservation->getErrors())
+	{
+		foreach($model->reservation->getErrors() as $error) {
+			Yii::app()->user->setFlash('error', $error[0]);
+		}
+	}
+	$this->widget('bootstrap.widgets.BootAlert');
+?>
 <?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
 	'id'=>'reservationdetails-form',
 	'enableAjaxValidation'=>false,
@@ -27,7 +36,7 @@
 
 	<?php echo $form->textFieldRow($model,'postcode',array('class'=>'span5','maxlength'=>10)); ?>
 
-	<?php echo $form->textFieldRow($model,'otherinfo',array('class'=>'span5','maxlength'=>255)); ?>
+	<?php echo $form->textAreaRow($model,'otherinfo',array('class'=>'span5')); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.BootButton', array(

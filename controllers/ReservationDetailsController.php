@@ -27,11 +27,11 @@ class ReservationDetailsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create'),
+				'actions'=>array('index','create','viewpayment'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'update' actions
-				'actions'=>array('update'),
+				'actions'=>array('update','view'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -54,6 +54,14 @@ class ReservationDetailsController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	
+	public function actionViewPayment()
+	{
+		$reservation=Reservation::model()->with('reservationDetails')->findByPk(Yii::app()->session['reservationid']);
+		$this->render('viewPayment',array(
+						'reservation'=>$reservation,
+		));
+	}
 
 	/**
 	 * Creates a new model.
@@ -63,24 +71,19 @@ class ReservationDetailsController extends Controller
 	{
 		$model=new ReservationDetails;
 		
-		$reservation=Reservation::model()->findByPk(Yii::app()->session['reservationid']);
-		$reservation->confirmreservation = true;
+		$model->reservation=Reservation::model()->findByPk(Yii::app()->session['reservationid']);
+		$model->reservation->confirmreservation = true;
 		
 		if(isset($_POST['ReservationDetails'])) {
-			if($reservation->save()) {
+			if($model->reservation->save()) {
 				$model->attributes=$_POST['ReservationDetails'];
-				$model->setAttribute('reservationid',$reservation->id);
+				$model->setAttribute('reservationid',$model->reservation->id);
 				if($model->save())
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('viewPayment'));
 			}
 		}
-		else {
-			//Throw Exception("Unable to save reservation", 500);
-		}
-		
 		$this->render('create',array(
 			'model'=>$model,
-			'reservation'=>$reservation,
 		));
 		
 	}
@@ -92,7 +95,8 @@ class ReservationDetailsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($id)->with('Reservation');
+		
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);

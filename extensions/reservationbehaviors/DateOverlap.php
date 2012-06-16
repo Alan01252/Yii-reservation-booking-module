@@ -130,12 +130,19 @@ class DateOverlap extends CActiveRecordBehavior
 		$sql .= $this->GetOverlapCheckSQL();
 		$sql .= " and roomid=:roomid";
 		$sql .= " and confirmreservation=true";
-
+		
+		/**
+		 * We're updating a reservation, make sure we don't include this in the search.
+		 */
+		if($reservation->id) {
+			$sql .= " and id != :reservationid ";
+		}
 
 		$command=$this->_connection->createCommand($sql);
 		$command->bindParam(":datefrom",$datefrom);
 		$command->bindParam(":dateto",$dateto);
 		$command->bindParam(":roomid",$roomid);
+		$command->bindParam(":reservationid",$reservation->id);
 		
 		$rows=$command->queryAll();
 		if(empty($rows))

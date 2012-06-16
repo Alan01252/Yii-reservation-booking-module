@@ -22,17 +22,6 @@
 class Reservation extends CActiveRecord
 {
 	/**
-	 * Used to store a count of rooms available for this booking.
-	 * @var integer
-	 */
-	public $roomsavailable;
-	
-	/**
-	 * Used to set the date to.
-	 * @var integer
-	 */
-	public $numberofnights;
-	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Reservation the static model class
 	 */
@@ -40,11 +29,7 @@ class Reservation extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-	
 
-
-	
-	
 
 	/**
 	 * @return string the associated database table name
@@ -91,7 +76,9 @@ class Reservation extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array('roomtype'=>array(self::BELONGS_TO,'RoomType','roomid'));
+		return array('roomtype'=>array(self::BELONGS_TO,'RoomType','roomid'),
+					 'reservationDetails'=>array(self::HAS_ONE,'ReservationDetails','reservationid')
+				);
 	}
 
 	/**
@@ -113,22 +100,22 @@ class Reservation extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($date,$roomTypeDescription)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('roomid',$this->roomid,true);
-		$criteria->compare('datefrom',$this->datefrom,true);
-		$criteria->compare('dateto',$this->dateto,true);
-
+		$criteria->condition='(:date between dateFrom and dateTo) and roomtype.description=:roomTypeDescription';
+		$criteria->join = 'LEFT JOIN roomtype ON roomtype.id = roomid ';
+		$criteria->params=array(":date"=>$date,":roomTypeDescription"=>$roomTypeDescription);
+		
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
 	}
+	
+
 
 	/**
 	 * Set price onlinepayment amount for this reservation
@@ -136,14 +123,10 @@ class Reservation extends CActiveRecord
 	 * @see CActiveRecord::beforesave()
 	 */
 	public function beforeSave() {
-		
-		//Make sure we have a date from.
+
+		//Make sure we have a date to.
 		if(empty($this->dateto)) {
-		
-			$tempDateTo = new DateTime();
-			$tempDateTo = DateTime::createFromFormat('Y-m-d',$this->datefrom);
-			$tempDateTo->add(new DateInterval('P'.$this->numberofnights."D"));
-			$this->setAttribute('dateto', $tempDateTo->format('Y-m-d'));
+			$this->updateDateTo();
 		}
 		
 		if(empty($this->onlinepayment)) {
@@ -157,6 +140,25 @@ class Reservation extends CActiveRecord
 		
 		return parent::beforeSave();
 	}
+	/**
+	 * Updates the date to to be based on the number of the nights.
+	 * This is because in the database we store the dates the room is reserved for, which isn't the same as the checkout date which
+	 * hotel owners expect as the dateto.
+	 */
+	private function updateDateTo()
+	{
+		$tempDateTo = new DateTime();
+		$tempDateTo = DateTime::createFromFormat('Y-m-d',$this->datefrom);
+		$tempDateTo->add(new DateInterval('P'.$this->numberofnights."D"));
+		$this->setAttribute('dateto', $tempDateTo->format('Y-m-d'));
+	}
+	
+	public function afterFind()
+	{
+		$this->updateDateTo();
+		parent::afterFind();
+	}
+	
 	
     
 	

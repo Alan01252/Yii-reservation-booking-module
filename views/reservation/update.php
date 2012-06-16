@@ -5,14 +5,58 @@ $this->breadcrumbs=array(
 	'Update',
 );
 
-$this->menu=array(
-	array('label'=>'List Reservation', 'url'=>array('index')),
-	array('label'=>'Create Reservation', 'url'=>array('create')),
-	array('label'=>'View Reservation', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Reservation', 'url'=>array('admin')),
+$this->breadcrumbs=array(
+	'Reservations'=>array('index'),
+	$model->id,
 );
 ?>
 
-<h1>Update Reservation <?php echo $model->id; ?></h1>
+<div class="row">
+	<div class="span6">
+		<h1>Reservation</h1>
+	</div>
+	
+	<div class="span6">
+		<h1>Reservation Details</h1>
+	</div>
+</div>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<div class="row">
+
+	<div class="span5">
+		<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+	</div>
+	
+	<div class="span6 well">
+		<?php 
+		$this->widget('bootstrap.widgets.BootDetailView',array(
+			'data'=>$model->reservationDetails,
+			'attributes'=>array(
+				'reservationid',
+				'title',
+				'firstname',
+				'lastname',
+				'contactnumber',
+				'emailaddress',
+				'postaddress',
+				'city',
+				'county',
+				'country',
+				'postcode',
+				'otherinfo',
+			),
+		)); 
+
+		$this->widget('bootstrap.widgets.BootButton', array(
+				'buttonType'=>'submit',
+				'label'=>'Jump to reservation details',
+				'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+				'size'=>'mini', // '', 'large', 'small' or 'mini'
+				'htmlOptions' => array('class'=>'pull-right','submit'=>array('reservationDetails/update/','id'=>$model->reservationDetails->id)),
+
+		));
+		
+		?>
+		
+	</div>
+</div>

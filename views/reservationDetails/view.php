@@ -3,17 +3,28 @@ $this->breadcrumbs=array(
 	'Reservationdetails'=>array('index'),
 	$model->title,
 );
-
-$this->menu=array(
-	array('label'=>'List Reservationdetails','url'=>array('index')),
-	array('label'=>'Create Reservationdetails','url'=>array('create')),
-	array('label'=>'Update Reservationdetails','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Reservationdetails','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Reservationdetails','url'=>array('admin')),
-);
 ?>
 
-<h1>View Reservationdetails #<?php echo $model->id; ?></h1>
+<h1>Reservation Details</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Room Type</th>
+      <th>Date From</th>
+      <th>Date To</th>
+      <th>Online Payment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><?php echo $reservation->roomtype->description ?></td>
+      <td><?php echo $reservation->datefrom ?></td>
+      <td><?php echo $reservation->dateto ?></td>
+      <td><?php echo $reservation->onlinepayment ?></td>
+    </tr>
+  </tbody>
+</table>
 
 <?php $this->widget('bootstrap.widgets.BootDetailView',array(
 	'data'=>$model,
