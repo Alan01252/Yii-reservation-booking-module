@@ -1,6 +1,6 @@
 <?php
 /**
- * @author alan.hollis http://alanhollis.com
+ *@author alan.hollis http://alanhollis.com
 * @copyright alan.hollis http://alanhollis.com
 * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
 *
