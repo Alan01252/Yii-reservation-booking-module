@@ -24,13 +24,13 @@ $this->menu=array(
   </thead>
   <tbody>
     <tr>
-      <td><?php echo $reservation->roomtype->description ?></td>
-      <td><?php echo $reservation->datefrom ?></td>
-      <td><?php echo $reservation->dateto ?></td>
-      <td><?php echo $reservation->onlinepayment ?></td>
-      <td><?php echo $reservation->roomsavailable ?></td>
+      <td><?php echo $model->reservation->roomtype->description ?></td>
+      <td><?php echo $model->reservation->datefrom ?></td>
+      <td><?php echo $model->reservation->dateto ?></td>
+      <td><?php echo $model->reservation->onlinepayment ?></td>
+      <td><?php echo $model->reservation->roomsavailable ?></td>
     </tr>
   </tbody>
 </table>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'reservation'=>$reservation)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'reservation'=>$model->reservation)); ?>

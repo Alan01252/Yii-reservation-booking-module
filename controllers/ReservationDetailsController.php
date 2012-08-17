@@ -78,9 +78,16 @@ class ReservationDetailsController extends Controller
 			if($model->reservation->save()) {
 				$model->attributes=$_POST['ReservationDetails'];
 				$model->setAttribute('reservationid',$model->reservation->id);
-				if($model->save())
-					$this->redirect(array('viewPayment'));
-			}
+				if($model->save()) {
+					if(!Yii::app()->user->isGuest){
+						$this->redirect(array('reservation/update','id'=>$model->reservation->id));
+					} else {
+						$this->redirect(array('viewPayment'));
+					}
+				}
+					
+			} else
+				throw new CHttpException(500,'Unable to save reservation');
 		}
 		$this->render('create',array(
 			'model'=>$model,

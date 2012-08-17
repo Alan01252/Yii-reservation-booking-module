@@ -63,6 +63,7 @@ class ReservationController extends Controller
 		$this->render('view',array(
 			'model'=>$this->loadModel($id)->with('ReservationDetails'),
 		));
+		
 	}
 	
 	public function actionSearch()
@@ -109,7 +110,8 @@ class ReservationController extends Controller
 			$model->attributes=$_POST['Reservation'];
 			$model->setAttribute('confirmreservation',true);
 			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+				Yii::app()->session['reservationid'] = $model->id;
+				$this->redirect(array('reservationDetails/create'));
 			}
 		}
 		
