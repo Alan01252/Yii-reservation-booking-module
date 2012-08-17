@@ -134,7 +134,7 @@ class DateOverlap extends CActiveRecordBehavior
 		/**
 		 * We're updating a reservation, make sure we don't include this in the search.
 		 */
-		if($reservation->id) {
+		if($reservation->getAttribute('id')) {
 			$sql .= " and id != :reservationid ";
 		}
 
@@ -142,8 +142,9 @@ class DateOverlap extends CActiveRecordBehavior
 		$command->bindParam(":datefrom",$datefrom);
 		$command->bindParam(":dateto",$dateto);
 		$command->bindParam(":roomid",$roomid);
-		if($reservation->id) {
-			$command->bindParam(":reservationid",$reservation->id);
+		if($reservation->getAttribute('id')) {
+			$id = $reservation->getAttribute('id');
+			$command->bindParam(":reservationid",$id);
 		}
 		
 		$rows=$command->queryAll();
