@@ -142,7 +142,9 @@ class DateOverlap extends CActiveRecordBehavior
 		$command->bindParam(":datefrom",$datefrom);
 		$command->bindParam(":dateto",$dateto);
 		$command->bindParam(":roomid",$roomid);
-		$command->bindParam(":reservationid",$reservation->id);
+		if($reservation->id) {
+			$command->bindParam(":reservationid",$reservation->id);
+		}
 		
 		$rows=$command->queryAll();
 		if(empty($rows))
