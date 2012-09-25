@@ -72,7 +72,7 @@ class ReservationDetailsController extends Controller
 		$model=new ReservationDetails;
 		
 		$model->reservation=Reservation::model()->findByPk(Yii::app()->session['reservationid']);
-		$model->reservation->confirmreservation = true;
+		$model->reservation->setAttribute('confirmreservation', true);
 		
 		if(isset($_POST['ReservationDetails'])) {
 			if($model->reservation->save()) {
