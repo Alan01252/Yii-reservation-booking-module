@@ -7,42 +7,29 @@ $this->breadcrumbs=array(
 
 ?>
 <div class="row">
+<h1>Reservation Details</h1>
 
-	<div class="span6">
-		<h1>Reservation Details</h1>
-	</div>
-	
-	<div class="span6">
-		<h1>Reservation</h1>
-	</div>
+
+<div>
+	<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 </div>
-
-<div class="row">
-
-	<div class="span5">
-		<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
-	</div>
 	
-	<div class="span6 well">
-		<?php 
-		$this->widget('bootstrap.widgets.BootDetailView',array(
-			'data'=>$model->reservation,
-			'attributes'=>array(
-				'roomtype.description',
-				'datefrom',
-				'numberofnights',
-				'dateto',
-			),
-		)); 
+<div class="row">
+<?php 
+	$this->widget('zii.widgets.CDetailView',array(
+		'data'=>$model->reservation,
+		'attributes'=>array(
+			'roomtype.description',
+			'datefrom',
+			'numberofnights',
+			'dateto',
+		),
+	)); 
+	
+	echo CHtml::submitButton('Edit reservation',
+			array('submit'=>array('reservation/update/',
+					'id'=>$model->reservation->id))
+	);
 
-		
-		$this->widget('bootstrap.widgets.BootButton', array(
-		'buttonType'=>'submit',
-	    'label'=>'Jump to reservation',
-	    'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-	    'size'=>'mini', // '', 'large', 'small' or 'mini'
-		'htmlOptions' => array('class'=>'pull-right','submit'=>array('reservation/update/','id'=>$model->reservation->id)),
-		));
-		?>
-	</div>
+?>
 </div>

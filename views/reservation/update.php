@@ -41,17 +41,15 @@ if($model->reservationDetails) {
 					'otherinfo',
 			),
 	));
+?>
+	<div class="row buttons">
+		<?php echo CHtml::submitButton('Edit reservation details',
+										array('submit'=>array('reservationDetails/update/',
+																'id'=>$model->reservationDetails->id))
+				); 
+		?>
+	</div>
 
-
-
-	$this->widget('bootstrap.widgets.BootButton', array(
-			'buttonType'=>'submit',
-			'label'=>'Jump to reservation details',
-			'type'=>'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-			'size'=>'mini', // '', 'large', 'small' or 'mini'
-			'htmlOptions' => array('class'=>'pull-right','submit'=>array('reservationDetails/update/','id'=>$model->reservationDetails->id)),
-
-	));
+<?php 
 }
 ?>
-</div>
