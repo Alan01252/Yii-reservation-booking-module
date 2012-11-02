@@ -9,9 +9,9 @@ $this->menu=array(
 );
 ?>
 
-<h1>Reservationdetails</h1>
+<h1>Reservation Details</h1>
 
-<?php $this->widget('bootstrap.widgets.BootListView',array(
+<?php $this->widget('zii.widgets.CListView',array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

@@ -14,7 +14,6 @@
  *
  * The followings are the available columns in table 'reservation':
  * @property integer $id
- * @property string $bookingid
  * @property string $roomid
  * @property string $datefrom
  * @property string $dateto
@@ -89,7 +88,7 @@ class Reservation extends CActiveRecord
 	
 		return array(
 			'id' => 'ID',
-			'roomid' => 'Room ID',
+			'roomid' => 'Room Type',
 			'datefrom' => 'Date From',
 			'dateto' => 'Date To',
 			'numberofnights' => 'Number of nights'
@@ -100,19 +99,33 @@ class Reservation extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($date,$roomTypeDescription)
+	public function search($date = null,$roomTypeDescription = null)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
-		$criteria->condition='(:date between dateFrom and dateTo) and roomtype.description=:roomTypeDescription';
-		$criteria->join = 'LEFT JOIN roomtype ON roomtype.id = roomid ';
-		$criteria->params=array(":date"=>$date,":roomTypeDescription"=>$roomTypeDescription);
+		if($date && $roomTypeDescription) {
+			$criteria=new CDbCriteria;
+			$criteria->condition='(:date between dateFrom and dateTo) and roomtype.description=:roomTypeDescription';
+			$criteria->join = 'LEFT JOIN roomtype ON roomtype.id = roomid ';
+			$criteria->params=array(":date"=>$date,":roomTypeDescription"=>$roomTypeDescription);
+			
+			return new CActiveDataProvider(get_class($this), array(
+					'criteria'=>$criteria,
+			));
+		}
 		
-		return new CActiveDataProvider(get_class($this), array(
-			'criteria'=>$criteria,
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('id',$this->id);
+		$criteria->compare('roomid',$this->roomid);
+		$criteria->compare('datefrom',$this->datefrom,true);
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
 		));
+		
+		
 	}
 	
 

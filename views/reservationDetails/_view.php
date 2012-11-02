@@ -30,31 +30,4 @@
 	<?php echo CHtml::encode($data->emailaddress); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('postaddress')); ?>:</b>
-	<?php echo CHtml::encode($data->postaddress); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('city')); ?>:</b>
-	<?php echo CHtml::encode($data->city); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('county')); ?>:</b>
-	<?php echo CHtml::encode($data->county); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('country')); ?>:</b>
-	<?php echo CHtml::encode($data->country); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('postcode')); ?>:</b>
-	<?php echo CHtml::encode($data->postcode); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('otherinfo')); ?>:</b>
-	<?php echo CHtml::encode($data->otherinfo); ?>
-	<br />
-
-	*/ ?>
-
 </div>

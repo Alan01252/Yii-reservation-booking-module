@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
   </tbody>
 </table>
 
-<?php $this->widget('bootstrap.widgets.BootDetailView',array(
+<?php $this->widget('zii.widgets.CListView',array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',

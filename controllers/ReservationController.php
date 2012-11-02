@@ -109,6 +109,7 @@ class ReservationController extends Controller
 		if(isset($_POST['Reservation'])) {
 			$model->attributes=$_POST['Reservation'];
 			$model->setAttribute('confirmreservation',true);
+
 			if($model->save()) {
 				Yii::app()->session['reservationid'] = $model->id;
 				$this->redirect(array('reservationDetails/create'));
@@ -174,10 +175,7 @@ class ReservationController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$criteria = new CDbCriteria();
-		$criteria->with(array('RoomType','ReservationDetails'));
-		
-		$dataProvider=new CActiveDataProvider('Reservation',$criteria);
+		$dataProvider=new CActiveDataProvider('Reservation');
 		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,

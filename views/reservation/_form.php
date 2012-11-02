@@ -1,40 +1,48 @@
 <div class="form">
 
 <?php 
-
-
-$form = $this->beginWidget('bootstrap.widgets.BootActiveForm', array(
-    'id'=>'verticalForm',
-    'type'=>'vertical',
+$form = $this->beginWidget('CActiveForm', array(
+    'id'=>'reservation-form',
 ));
-
-
 ?>
 <fieldset>
-	<legend><p class="note">Fields with <span class="required">*</span> are required.</p></legend>
+	<legend>
+		<p class="note">Fields with <span class="required">*</span> are required.</p>
+	</legend>
 	
-
 	<?php echo $form->errorSummary($model,"Sorry we were unable to reserve that room:"); ?>
-	
-	<?php echo $form->dropDownListRow($model,'roomid',CHtml::listData(RoomType::model()->findAll(),'id','description')); ?>
+	<div class="row">
+	<?php echo $form->labelEx($model,'roomid'); ?>
+	<?php echo $form->dropDownList($model,'roomid',CHtml::listData(RoomType::model()->findAll(),'id','description')); ?>
 	<?php echo $form->error($model,'roomid'); ?>
-	<?php echo $form->datepickerRow($model,'datefrom',array('data-date-format'=>'yyyy-mm-dd')); ?>
-	
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'datefrom');
+	$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+			'attribute'=>'datefrom',
+			'model'=>$model,
+			'options'=>array(
+				'dateFormat' => 'yy-mm-dd',
+			),
+			'htmlOptions'=>array(
+					'style'=>'height:20px;'
+			),
+	));
+	?>
+	</div>
+	<div class="row">
 	<?php 
 	$numberOfNights = array();
 	for($i=1; $i <= 30; $i++) {
 		$numberOfNights[$i] = $i;
 	}
-	echo $form->dropDownListRow($model,'numberofnights',$numberOfNights); ?>
-														  
-
+	echo $form->labelEx($model,'numberofnights');
+	echo $form->dropDownList($model,'numberofnights',$numberOfNights); ?>
+	</div>
 	
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.BootButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
-		)); ?>
+	<div class="row buttons">
+	<?php echo CHtml::submitButton('Submit'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

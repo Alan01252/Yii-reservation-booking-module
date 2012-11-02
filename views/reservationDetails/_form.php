@@ -1,49 +1,96 @@
 <?php 
-	if($model->reservation->getErrors())
-	{
-		foreach($model->reservation->getErrors() as $error) {
-			Yii::app()->user->setFlash('error', $error[0]);
-		}
-	}
-	$this->widget('bootstrap.widgets.BootAlert');
+	$form = $this->beginWidget('CActiveForm', array(
+	    'id'=>'reservation-form',
+	));
+
+	echo $form->errorSummary($model,"Sorry we were unable to create that reservation");
 ?>
-<?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
-	'id'=>'reservationdetails-form',
-	'enableAjaxValidation'=>false,
-)); ?>
 
 	<p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'title');
+	echo $form->textField($model,'title',array('maxlength'=>3));
+	echo $form->error($model,'title');
+	?>
+	</div>
+	<div class="row">
+	
+	<?php 
+	echo $form->labelEx($model,'firstname');
+	echo $form->textField($model,'firstname',array('maxlength'=>255)); 
+	echo $form->error($model,'firstname');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'lastname');
+	echo $form->textField($model,'lastname',array('maxlength'=>255)); 
+	echo $form->error($model,'lastname');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'contactnumber');
+	echo $form->textField($model,'contactnumber',array('maxlength'=>20)); 
+	echo $form->error($model,'contactnumber');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'emailaddress');
+	echo $form->textField($model,'emailaddress',array('maxlength'=>255)); 
+	echo $form->error($model,'emailaddress');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'postaddress');
+	echo $form->textField($model,'postaddress',array('maxlength'=>255)); 
+	echo $form->error($model,'postaddress');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'city');
+	echo $form->textField($model,'city',array('maxlength'=>255)); 
+	echo $form->error($model,'city');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'county');
+	echo $form->textField($model,'county',array('maxlength'=>255)); 
+	echo $form->error($model,'county');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'country');
+	echo $form->textField($model,'country',array('maxlength'=>255)); 
+	echo $form->error($model,'country');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'postcode');
+	echo $form->textField($model,'postcode',array('maxlength'=>10));
+	echo $form->error($model,'postcode');
+	?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->labelEx($model,'otherinfo');
+	echo $form->textArea($model,'otherinfo'); 
+	echo $form->error($model,'otherinfo');
+	?>
+	</div>
 
-	<?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>3)); ?>
-
-	<?php echo $form->textFieldRow($model,'firstname',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'lastname',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'contactnumber',array('class'=>'span5','maxlength'=>20)); ?>
-
-	<?php echo $form->textFieldRow($model,'emailaddress',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'postaddress',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'city',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'county',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'country',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'postcode',array('class'=>'span5','maxlength'=>10)); ?>
-
-	<?php echo $form->textAreaRow($model,'otherinfo',array('class'=>'span5')); ?>
-
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.BootButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
-		)); ?>
+	
+	<div class="row buttons">
+	<?php echo CHtml::submitButton('Submit'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

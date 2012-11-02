@@ -43,7 +43,7 @@ $this->breadcrumbs=array(
 		</table>
 		
 		<?php 
-		$this->widget('bootstrap.widgets.BootDetailView',array(
+		$this->widget('zii.widgets.CDetailView',array(
 			'data'=>$reservation->reservationDetails,
 			'attributes'=>array(
 				'reservationid',

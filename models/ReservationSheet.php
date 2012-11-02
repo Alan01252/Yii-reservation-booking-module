@@ -61,6 +61,14 @@ class ReservationSheet extends CActiveRecord
 		}
 	}
 	
+	public function attributeLabels()
+	{
+		return array(
+				'datefrom' => 'Date From',
+		);
+	}
+	
+	
 	public function __set($key,$val) {
 		$this->$key=$val;
 	}

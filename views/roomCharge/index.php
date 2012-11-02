@@ -10,16 +10,16 @@ $this->menu=array(
 ?>
 <h1>Room Charges</h1>
 
-<?php $this->widget('bootstrap.widgets.BootGridView', array(
-    'type'=>'striped bordered condensed',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+
     'dataProvider'=>$dataProvider,
     'template'=>"{items}",
     'columns'=>array(
         array('name'=>'roomtype.description', 'header'=>'Description'),
         array('name'=>'price', 'header'=>'Price'),
         array(
-            'class'=>'bootstrap.widgets.BootButtonColumn',
-            'htmlOptions'=>array('style'=>'width: 50px'),
+            'class'=>'CButtonColumn',
+ 
         ),
     ),
 )); 

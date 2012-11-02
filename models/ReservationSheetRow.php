@@ -5,7 +5,8 @@
 **/
 class ReservationSheetRow
 {
-	private $roomType;
+	public $id;
+	public $roomType;
 	private $reservations = Array();
 	
 	public function getRoomTypeDescription()
@@ -29,7 +30,6 @@ class ReservationSheetRow
 	public function populate($roomType,$dates)
 	{
 		$this->roomType = $roomType;
-			
 		foreach($dates as $date) {
 		
 			$criteria=new CDbCriteria();
@@ -41,6 +41,7 @@ class ReservationSheetRow
 		
 			$this->reservations[$date] = $result;
 		}
+		
 	}
 	
 }

@@ -5,51 +5,38 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<div class="row">
+<h1>Reservation</h1>
 
-	<div class="span6">
-		<h1>Reservation</h1>
-	</div>
-	
-</div>
+<?php 
+$this->widget('zii.widgets.CDetailView',array(
+	'data'=>$model->reservationDetails,
+	'attributes'=>array(
+		'reservationid',
+		'title',
+		'firstname',
+		'lastname',
+		'contactnumber',
+		'emailaddress',
+		'postaddress',
+		'city',
+		'county',
+		'country',
+		'postcode',
+		'otherinfo',
+	),
+)); 
+?>
 
-<div class="row">
-	<div class="span6">
-		<?php 
-		$this->widget('bootstrap.widgets.BootDetailView',array(
-			'data'=>$model->reservationDetails,
-			'attributes'=>array(
-				'reservationid',
-				'title',
-				'firstname',
-				'lastname',
-				'contactnumber',
-				'emailaddress',
-				'postaddress',
-				'city',
-				'county',
-				'country',
-				'postcode',
-				'otherinfo',
-			),
-		)); 
-		?>
-	</div>
-	
-	<div class="span6">
-		<?php
-		 $this->widget('bootstrap.widgets.BootDetailView', array(
-			'data'=>$model,
-			'attributes'=>array(
-				'id',
-				'roomid',
-				'datefrom',
-				'numberofnights',
-				'dateto',
-				'onlinepayment',
-			),
-		)); 
-		?>
-	</div>
-
-</div>
+<?php
+ $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
+		'id',
+		'roomid',
+		'datefrom',
+		'numberofnights',
+		'dateto',
+		'onlinepayment',
+	),
+)); 
+?>

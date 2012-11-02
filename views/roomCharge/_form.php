@@ -1,4 +1,4 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
+<?php $form=$this->beginWidget('CActiveForm',array(
 	'id'=>'room-charges-form',
 	'enableAjaxValidation'=>false,
 )); ?>
@@ -6,20 +6,26 @@
 	<p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-	
-	<?php echo $form->dropDownListRow($model,'roomid',CHtml::listData(RoomType::model()->findAll(),     
+	<div class="row">
+	<?php 
+	echo $form->label($model,'roomid');
+	echo $form->dropDownList($model,'roomid',CHtml::listData(RoomType::model()->findAll(),     
 														    'id',     
 														    'description'
-														  )); ?>
+														  )); 
+	echo $form->error($model,'roomid');
+	?>
 
-	<?php echo $form->textFieldRow($model,'price',array('class'=>'span5')); ?>
-
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.BootButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
-		)); ?>
+	</div>
+	<div class="row">
+	<?php 
+	echo $form->label($model,'price');
+	echo $form->textField($model,'price'); 
+	echo $form->error($model,'price');
+	?>
+	</div>
+	<div class="row buttons">
+	<?php echo CHtml::submitButton('Submit'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

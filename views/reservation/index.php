@@ -10,8 +10,7 @@ $this->menu=array(
 
 <h1>Reservations</h1>
 
-<?php $this->widget('bootstrap.widgets.BootGridView', array(
-    'type'=>'striped bordered condensed',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$dataProvider,
     'template'=>"{items}",
     'columns'=>array(
@@ -22,7 +21,7 @@ $this->menu=array(
     	array('name'=>'numberofnights', 'header'=>'Number Of Nights'),
         array('name'=>'dateto', 'header'=>'Date To'),
         array(
-            'class'=>'bootstrap.widgets.BootButtonColumn',
+            'class'=>'CButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),
         ),
     ),

@@ -13,8 +13,8 @@ $this->menu=array(
 
 
 
-<?php $this->widget('bootstrap.widgets.BootGridView', array(
-    'type'=>'striped bordered condensed',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+
     'dataProvider'=>$dataProvider,
     'template'=>"{items}",
     'columns'=>array(

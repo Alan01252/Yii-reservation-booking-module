@@ -1,39 +1,41 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.BootActiveForm',array(
+<?php $form=$this->beginWidget('CActiveForm',array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
 )); ?>
 
-	<?php echo $form->textFieldRow($model,'id',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'reservationid',array('class'=>'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'title',array('class'=>'span5','maxlength'=>3)); ?>
-
-	<?php echo $form->textFieldRow($model,'firstname',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'lastname',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'contactnumber',array('class'=>'span5','maxlength'=>20)); ?>
-
-	<?php echo $form->textFieldRow($model,'emailaddress',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'postaddress',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'city',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'county',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'country',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<?php echo $form->textFieldRow($model,'postcode',array('class'=>'span5','maxlength'=>10)); ?>
-
-	<?php echo $form->textFieldRow($model,'otherinfo',array('class'=>'span5','maxlength'=>255)); ?>
-
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.BootButton', array(
-			'type'=>'primary',
-			'label'=>'Search',
-		)); ?>
+	<div class="row">
+		<?php echo $form->textField($model,'id'); ?>
+	</div>
+	<div class="row">
+	<?php echo $form->textField($model,'reservationid'); ?>
+	</div>
+	
+	<div class="row">
+	<?php echo $form->textField($model,'title',array('maxlength'=>3)); ?>
+	</div>
+	<?php echo $form->textField($model,'firstname',array('maxlength'=>255)); ?>
+	<div class="row">
+	<?php echo $form->textField($model,'lastname',array('maxlength'=>255)); ?>
+	</div>
+	<?php echo $form->textField($model,'contactnumber',array('maxlength'=>20)); ?>
+	<div class="row">
+	<?php echo $form->textField($model,'emailaddress',array('maxlength'=>255)); ?>
+	</div>
+	<?php echo $form->textField($model,'postaddress',array('maxlength'=>255)); ?>
+	<div class="row">
+	<?php echo $form->textField($model,'city',array('maxlength'=>255)); ?>
+	</div>
+	<?php echo $form->textField($model,'county',array('maxlength'=>255)); ?>
+	<div class="row">
+	<?php echo $form->textField($model,'country',array('maxlength'=>255)); ?>
+	</div>
+	<?php echo $form->textField($model,'postcode',array('maxlength'=>10)); ?>
+	<div class="row">
+	<?php echo $form->textField($model,'otherinfo',array('maxlength'=>255)); ?>
+	</div>
+	
+	<div class="row buttons">
+	<?php echo CHtml::submitButton('Submit'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
