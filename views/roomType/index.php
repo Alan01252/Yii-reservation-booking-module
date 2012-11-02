@@ -21,7 +21,7 @@ $this->menu=array(
         array('name'=>'description', 'header'=>'Description'),
         array('name'=>'quantity', 'header'=>'Quantity'),
         array(
-            'class'=>'bootstrap.widgets.BootButtonColumn',
+            'class'=>'CButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),
         ),
     ),
