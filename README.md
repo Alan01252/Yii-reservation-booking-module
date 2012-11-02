@@ -15,6 +15,25 @@ Set room prices
 
 Set room types
 
+Installation
+============
+
+cd path_to_application
+git submodule add git://github.com/Alan01252/Yii-reservation-booking-module.git protected/modules/openbooking/
+
+Install the database
+
+mysql -u username -p databasename < protected/modules/openbooking/data/yii-booking.sql
+
+Edit protected/config/main.php
+
+In the modules array add
+
+    'openbooking'=>array(
+							 'reservationbehaviors'=> array(
+															'DateOverlap',
+															),
+		),
 
 Demo
 ====
