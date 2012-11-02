@@ -43,7 +43,7 @@ foreach($reservationSheet->dates as $date) {
 	$columns[] = array('header'=>"{$date}",
 						'class'=>'CLinkColumn',
 						'urlExpression'=>'Yii::app()->createUrl("openbooking/reservation/search",
-										  array("description"=>$data->getRoomTypeDescription(),"date"=>'.$date.'))',
+										  array("description"=>$data->getRoomTypeDescription(),"date"=>\''.$date.'\'))',
 						'labelExpression'=> '$data->getReservationCount(\''.$date.'\').\' 
 												of \'.$data->getTotalAvailableCount()');
 }
