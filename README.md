@@ -1,9 +1,18 @@
-Yii Open booking
+Yii Reservation booking module.
 ===========
 
-Open booking is a YII module providing basic reservation functionality for a Yii based application.
+This is a module which allows a Yii based application to book online.
+The module is still in alpha state.
 
-demo
+Features
+========
+
+Reservation - Creation / Deletion / Editing - Performs checks to make sure reservation is available.
+Resveration sheet - Quickly allows hotels / bed and breakfasts to see their reservations for this week.
+Room types - configure multiple room types for your hotel / b&b
+Room charges - Configure different room charges for your hotel / bed and breakfast.
+
+Demo
 ====
 
 An online demo of the functionality can be found here
