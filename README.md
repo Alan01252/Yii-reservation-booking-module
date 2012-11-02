@@ -20,11 +20,11 @@ Installation
 
 cd path_to_application
 
-   git submodule add git://github.com/Alan01252/Yii-reservation-booking-module.git protected/modules/openbooking/
+    git submodule add git://github.com/Alan01252/Yii-reservation-booking-module.git protected/modules/openbooking/
 
 Install the database
 
-   mysql -u username -p databasename < protected/modules/openbooking/data/yii-booking.sql
+    mysql -u username -p databasename < protected/modules/openbooking/data/yii-booking.sql
 
 Edit protected/config/main.php
 
