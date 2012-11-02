@@ -1,7 +1,7 @@
-openbooking
+Yii Open booking
 ===========
 
-Openbooking is YII module providing basic booking functionality.
+Open booking is a YII module providing basic reservation functionality for a Yii based application.
 
 demo
 ====
